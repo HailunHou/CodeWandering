@@ -7,11 +7,11 @@ import com.hhl.utils.ArrayUtils;
 
 public class Remove_Element {
     public static void main(String[] args) {
-        int[] array = {1, 3, 4, 5, 5, 6, 7, 7, 8, 9, 8};
+        int[] array = {1, 3, 4, 5, 5, 6, 7, 7, 8, 9};
         Remove_Element re = new Remove_Element();
         System.out.println(re.removeElement(array, 5));
         ArrayUtils.foreachArray(array);
-        int[] array_1 = {1, 3, 4, 5, 5, 6, 7, 7, 8, 9, 8};
+        int[] array_1 = {1, 3, 4, 5, 5, 6, 7, 7, 8, 9};
         System.out.println(re.removeElement_1(array_1, 8));
         ArrayUtils.foreachArray(array_1);
     }
