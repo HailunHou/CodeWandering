@@ -87,6 +87,7 @@ public class MyLinkList {
     }
 
 
+
     public int get_1(int index) {
         if(index < 0 || index > size-1) {
             return -1;

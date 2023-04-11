@@ -10,6 +10,8 @@ public class SortedSquares {
     public static void main(String[] args) {
         int[] array = {-9, -7, -5, -3, 1, 4, 6, 8, 19};
         ArrayUtils.foreachArray(new SortedSquares().sortedSquares_1(array));
+        int[] array_re = {-4,-1,0,3,10};
+        ArrayUtils.foreachArray(new SortedSquares().sortedSquares_re(array_re));
     }
 
     public int[] sortedSquares(int[] nums) {
@@ -45,5 +47,23 @@ public class SortedSquares {
             }
         }
         return results;
+    }
+
+    public int[] sortedSquares_re(int[] nums) {
+        int left = 0;
+        int right = nums.length-1;
+        int[] new_nums = new int[nums.length];
+        int index = nums.length-1;
+        while(left <= right) {
+            if(nums[left]*nums[left] > nums[right]*nums[right]) {
+                new_nums[index] = nums[left]*nums[left];
+                left++;
+            }else {
+                new_nums[index] = nums[right]*nums[right];
+                right--;
+            }
+            index--;
+        }
+        return new_nums;
     }
 }

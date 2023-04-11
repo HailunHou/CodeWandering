@@ -31,7 +31,7 @@ public class Find_Num_Binary {
 
     public int findNum_2(int[] array, int num){
         int start = 0;
-        int end = array.length; //这里必须减一，如果不减一，在数组中没有需要查找的数，而这个数还是大于数组中所有数的，那么最后会搜索到array[array.length]，报指针溢出异常
+        int end = array.length;
         while (start < end){
             int middle = start + (end - start)/2;
             if(array[middle] < num) {
@@ -63,6 +63,22 @@ public class Find_Num_Binary {
 
         }
         return start;
+    }
+
+    public int findNumOrInsert_re(int array[], int num){
+        int left = 0;
+        int right = array.length - 1;
+        while(left <= right) {
+            int middle = (right+left)/2;
+            if(array[middle] == num) {
+                return middle;
+            }else if(array[middle] < num){
+                left = middle + 1;
+            }else{
+                right = middle -1;
+            }
+        }
+        return -1;
     }
 }
 

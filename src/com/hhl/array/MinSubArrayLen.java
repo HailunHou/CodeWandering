@@ -7,7 +7,7 @@ package com.hhl.array;
 public class MinSubArrayLen {
     public static void main(String[] args) {
         MinSubArrayLen msa = new MinSubArrayLen();
-        int[] array = new int[]{1,2,3,2,4,3};
+        int[] array = new int[]{1, 2, 3, 2, 4, 3};
         System.out.println(msa.minSubArrayLen(7, array));
         System.out.println(msa.minSubArrayLen_1(7, array));
         System.out.println(msa.minSubArrayLen_2(7, array));
@@ -15,6 +15,7 @@ public class MinSubArrayLen {
 
     /**
      * 方法：暴力循环
+     *
      * @param s
      * @param nums
      * @return
@@ -39,6 +40,7 @@ public class MinSubArrayLen {
     /**
      * 自己写的
      * 方法：滑动窗口
+     *
      * @param s
      * @param nums
      * @return
@@ -63,6 +65,7 @@ public class MinSubArrayLen {
     /**
      * 代码随想录上的标准答案
      * 核心：滑动窗口
+     *
      * @param s
      * @param nums
      * @return
@@ -80,4 +83,5 @@ public class MinSubArrayLen {
         }
         return result == Integer.MAX_VALUE ? 0 : result;
     }
+
 }

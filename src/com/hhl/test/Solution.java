@@ -4,6 +4,8 @@
  */
 package com.hhl.test;
 
+import org.junit.Test;
+
 import java.util.LinkedList;
 
 class T {
