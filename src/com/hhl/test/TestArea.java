@@ -7,6 +7,7 @@ package com.hhl.test;
 import com.hhl.hash.Intersection;
 import org.junit.Test;
 
+import java.beans.IntrospectionException;
 import java.net.Inet4Address;
 import java.time.Year;
 import java.util.*;
@@ -91,11 +92,13 @@ public class TestArea {
 
     @Test
     public void test8(){
-        Queue<Integer> queue = new ArrayDeque<>();
-        queue.add(1);
-        queue.add(2);
-        queue.add(3);
-        System.out.println("queue.poll() = " + queue.poll());
+        List<Integer> left = new ArrayList<>();
+        left.add(1);
+        for(int i=0; i<left.size(); i++){
+            int integer = left.get(i);
+            System.out.println(integer);
+        }
+
     }
 
 }
