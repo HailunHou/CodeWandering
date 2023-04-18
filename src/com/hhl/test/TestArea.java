@@ -22,6 +22,58 @@ import java.util.stream.IntStream;
 
 public class TestArea {
 
+    class Solution {
+        List<List<Integer>> lists = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        public List<List<Integer>> combine(int n, int k) {
+            backTracking(n, k, 1);
+            lists.forEach(System.out::println);
+            return lists;
+        }
+
+        public void backTracking(int n, int k, int startIndex){
+            if(list.size() == k){
+                lists.add(new ArrayList<>(list));
+                lists.forEach(System.out::println);
+                return;
+            }
+
+            for(int i=startIndex; i <= n; i++){
+                list.add(i);
+                backTracking(n, k, i+1);
+                list.remove(list.size()-1);
+            }
+
+        }
+    }
+
+//    class Solution {
+//        List<List<Integer>> result = new ArrayList<>();
+//        LinkedList<Integer> path = new LinkedList<>();
+//        public List<List<Integer>> combine(int n, int k) {
+//            combineHelper(n, k, 1);
+//            result.forEach(System.out::println);
+//            return result;
+//        }
+//
+//        /**
+//         * 每次从集合中选取元素，可选择的范围随着选择的进行而收缩，调整可选择的范围，就是要靠startIndex
+//         * @param startIndex 用来记录本层递归的中，集合从哪里开始遍历（集合就是[1,...,n] ）。
+//         */
+//        private void combineHelper(int n, int k, int startIndex){
+//            //终止条件
+//            if (path.size() == k){
+//                result.add(new ArrayList<>(path));
+//                return;
+//            }
+//            for (int i = startIndex; i <= n - (k - path.size()) + 1; i++){
+//                path.add(i);
+//                combineHelper(n, k, i + 1);
+//                path.removeLast();
+//            }
+//        }
+//    }
+
     @Test
     public void test1(){
         System.out.println("(int)'a' = " + (int) 'a');
@@ -92,13 +144,34 @@ public class TestArea {
 
     @Test
     public void test8(){
-        List<Integer> left = new ArrayList<>();
-        left.add(1);
-        for(int i=0; i<left.size(); i++){
-            int integer = left.get(i);
-            System.out.println(integer);
-        }
+//        Deque<Integer> deque = new ArrayDeque<>();
+//        deque.isEmpty();
+//        deque.peekFirst();
+//        deque.addLast(1);
+//        deque.pollLast();
+        List<List<Integer>> lists = new ArrayList<>();
+        List<Integer> list1 = new ArrayList<>();
+        list1.add(1);
+        list1.add(2);
+        List<Integer> list2 = new ArrayList<>();
+        list2.add(3);
+        list2.add(4);
+        lists.add(list1);
+        lists.add(list2);
+        lists.forEach(System.out::println);
+//        ArrayList<Integer> arrayList = new ArrayList<>();
+//        arrayList.add(1);
+//        arrayList.add(2);
+//        arrayList.add(3);
+//        arrayList.remove(arrayList.size()-1);
+//        arrayList.forEach(System.out::println);
 
+    }
+
+    @Test
+    public void test9(){
+        Solution solution = new Solution();
+        solution.combine(4, 2);
     }
 
 }
