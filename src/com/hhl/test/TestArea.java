@@ -5,173 +5,329 @@
 package com.hhl.test;
 
 import com.hhl.hash.Intersection;
+import com.hhl.utils.ArrayUtils;
+import jdk.management.resource.ResourceType;
 import org.junit.Test;
+import org.junit.validator.PublicClassValidator;
+import sun.awt.windows.ThemeReader;
+import sun.security.util.ArrayUtil;
 
 import java.beans.IntrospectionException;
+import java.io.*;
 import java.net.Inet4Address;
 import java.time.Year;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReferenceArray;
+import java.util.concurrent.locks.LockSupport;
 import java.util.stream.IntStream;
 
 /**
- @author boom
- @create 2023-04-04 21:49
+ * @author boom
+ * @create 2023-04-04 21:49
  */
-
-
 
 public class TestArea {
 
     class Solution {
-        List<List<Integer>> lists = new ArrayList<>();
-        List<Integer> list = new ArrayList<>();
-        public List<List<Integer>> combine(int n, int k) {
-            backTracking(n, k, 1);
-            lists.forEach(System.out::println);
-            return lists;
-        }
-
-        public void backTracking(int n, int k, int startIndex){
-            if(list.size() == k){
-                lists.add(new ArrayList<>(list));
-                lists.forEach(System.out::println);
-                return;
+        public int integerBreak(int n) {
+            int[] dp = new int[59];
+            dp[2] = 1;
+            dp[3] = 2;
+            for(int i=4; i<=n; i++){
+                int max = 0;
+                for(int j=1; j<=i/2; j++){
+                    max = Math.max(max, Math.max(j*dp[i-j], j*(i-j)));
+                }
+                dp[i] = max;
             }
-
-            for(int i=startIndex; i <= n; i++){
-                list.add(i);
-                backTracking(n, k, i+1);
-                list.remove(list.size()-1);
-            }
-
+            return dp[n];
         }
     }
 
-//    class Solution {
-//        List<List<Integer>> result = new ArrayList<>();
-//        LinkedList<Integer> path = new LinkedList<>();
-//        public List<List<Integer>> combine(int n, int k) {
-//            combineHelper(n, k, 1);
-//            result.forEach(System.out::println);
-//            return result;
-//        }
-//
-//        /**
-//         * 每次从集合中选取元素，可选择的范围随着选择的进行而收缩，调整可选择的范围，就是要靠startIndex
-//         * @param startIndex 用来记录本层递归的中，集合从哪里开始遍历（集合就是[1,...,n] ）。
-//         */
-//        private void combineHelper(int n, int k, int startIndex){
-//            //终止条件
-//            if (path.size() == k){
-//                result.add(new ArrayList<>(path));
-//                return;
-//            }
-//            for (int i = startIndex; i <= n - (k - path.size()) + 1; i++){
-//                path.add(i);
-//                combineHelper(n, k, i + 1);
-//                path.removeLast();
-//            }
-//        }
-//    }
-
     @Test
-    public void test1(){
-        System.out.println("(int)'a' = " + (int) 'a');
+    public void test1() {
+        byte[] allocation1, allocation2,allocation3,allocation4,allocation5;
+        allocation1 = new byte[75776*1024];
+        allocation2 = new byte[1000*1024];
+        allocation3 = new byte[1000*1024];
+        allocation4 = new byte[1000*1024];
+        allocation5 = new byte[1000*1024];
     }
 
     @Test
-    public void test2(){
-        HashMap<Integer,Integer> numMap = new HashMap<>();
-        numMap.put(5, 1);
-        System.out.println(numMap);
-        numMap.put(5, 1);
-        System.out.println(numMap);
+    public void test2() {
+        StringBuffer sb = new StringBuffer("12345");
+        sb.delete(sb.length() - 3, sb.length());
+        System.out.println("sb.toString() = " + sb.toString());
+        String s = "123";
+        s.startsWith("");
     }
 
     @Test
-    public void test3(){
-        HashMap<Integer,Integer> numMap = new HashMap<>();
-        numMap.put(5, 1);
-        System.out.println(numMap);
-        Integer integer = numMap.get(5);
-        System.out.println(integer.intValue());
-    }
-
-    @Test
-    public void test4(){
-        Set<Integer> numsSet = new HashSet<>();
-        numsSet.add(10);
-        System.out.println("numsSet.contains(10) = " + numsSet.contains(10));
-
-    }
-
-    @Test
-    public void test5(){
-        int[] nums = new int[]{2,7,11,15};
-        int target = 9;
-        System.out.println("twoSum(nums, target) = " + twoSum(nums, target));
-    }
-
-    public int[] twoSum(int nums[], int target){
-        HashMap<Integer, Integer> numsMap = new HashMap<>();
-        for(int i=0; i<nums.length; i++){
-            if(numsMap.containsKey(target-nums[i])){
-                return new int[]{i, numsMap.get(target-nums[i]).intValue()};
-            }
-            numsMap.put(nums[i], i);
-        }
-        return nums;
-    }
-
-    @Test
-    public void test6(){
-        int nums[] = new int[]{1,4,33,6,2};
-        IntStream sorted = Arrays.stream(nums).sorted();
-        int[] ints = sorted.toArray();
+    public void test3() {
+        int a = Integer.MIN_VALUE;
+        int[] as = new int[]{1, 2, 3, 4, 5, 6};
+        int[] ints = Arrays.copyOfRange(as, 3, 7);
         for (int anInt : ints) {
-            System.out.println(anInt);
+            System.out.println("anInt = " + anInt);
         }
+    }
+
+    @Test
+    public void test4() {
+        Deque<Integer> deque = new ArrayDeque<>();
+
+        List<String> strList = new ArrayList<>();
+        strList.add("1");
+        strList.add("1");
+        strList.add("1");
+
+        strList.forEach(s -> {
+            System.out.println(s);
+        });
+    }
+
+    @Test
+    public void test5() {
+        try (Writer output = new FileWriter("output.txt")) {
+            output.write("你好，我是那个谁！！！", 3, 5);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 模拟HashMap中tableSizeFor函数
+     */
+    @Test
+    public void test6() {
+        final int MAXIMUM_CAPACITY = 1 << 30;
+        int cap = 19;
+        int n = cap - 1;
+        n |= n >>> 1;
+        n |= n >>> 2;
+        n |= n >>> 4;
+        n |= n >>> 8;
+        n |= n >>> 16;
+        int res = (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
+        System.out.println("res = " + res);
     }
 
     @Test
     public void test7(){
-        String s = "  hello world  ";
-        StringBuilder sb = new StringBuilder(s);
-        sb.setCharAt(0, 'a');
-        s = sb.toString();
-        System.out.println(s);
+        int a = (int) Math.pow(2, 4);
+        System.out.println("a = " + a);
+        int b = 3;
+        int c = b%a;
+        int d = (a-1) & b;
+        System.out.println(c == d);
     }
 
     @Test
     public void test8(){
-//        Deque<Integer> deque = new ArrayDeque<>();
-//        deque.isEmpty();
-//        deque.peekFirst();
-//        deque.addLast(1);
-//        deque.pollLast();
-        List<List<Integer>> lists = new ArrayList<>();
-        List<Integer> list1 = new ArrayList<>();
-        list1.add(1);
-        list1.add(2);
-        List<Integer> list2 = new ArrayList<>();
-        list2.add(3);
-        list2.add(4);
-        lists.add(list1);
-        lists.add(list2);
-        lists.forEach(System.out::println);
-//        ArrayList<Integer> arrayList = new ArrayList<>();
-//        arrayList.add(1);
-//        arrayList.add(2);
-//        arrayList.add(3);
-//        arrayList.remove(arrayList.size()-1);
-//        arrayList.forEach(System.out::println);
-
+        Solution solution = new Solution();
+        int integerBreak = solution.integerBreak(9);
+        System.out.println("integerBreak = " + integerBreak);
     }
 
     @Test
     public void test9(){
-        Solution solution = new Solution();
-        solution.combine(4, 2);
+        Map<Integer, Integer> map = new TreeMap<>();
+        map.put(1,2);
+        map.put(3,3);
+        map.put(2,3);
+
     }
+
+    @Test
+    public void test10(){
+        String s1 = new String("abc");
+        String s2 = "abc";
+        String s3 = "abc";
+        String s4 = s2.intern();
+        String s5 = s3.intern();
+        System.out.println("s1 == s1.intern() = " + (s1 == s1.intern()));
+        System.out.println(s1 == s2);
+        System.out.println(s2 == s3);
+        System.out.println(s2 == s4);
+        System.out.println(s4 == s5);
+
+    }
+
+    @Test
+    public void test11() throws InterruptedException {
+//        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+//                2,
+//                5,
+//                0L,
+//                TimeUnit.SECONDS,
+//                new LinkedBlockingQueue<>(3),
+//                Executors.defaultThreadFactory(),
+//                new ThreadPoolExecutor.AbortPolicy()
+//        );
+        Thread t1 = new Thread(){
+          public void run(){
+              System.out.println(Thread.currentThread().getName() + "启动...");
+              System.out.println("执行park");
+              LockSupport.park();
+              System.out.println("有线程执行了unpark");
+          }
+        };
+        t1.start();
+        Thread t2 = new Thread(){
+            public void run(){
+                System.out.println(Thread.currentThread().getName() + "启动...");
+                try {
+                    Thread.sleep(4000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                LockSupport.unpark(t1);
+                System.out.println("执行unpark(t1)");
+            }
+        };
+        t2.start();
+
+        t1.join();
+        System.out.println("Main method terminate");
+
+    }
+
+    @Test
+    public void test12() throws InterruptedException {
+
+        Thread t1 = new Thread(){
+            public void run(){
+                try {
+                    Thread.currentThread().wait();
+//                    wait();
+                    System.out.println(Thread.currentThread().getName() + " Over");
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        t1.start();
+        Thread t2 = new Thread(){
+            public void run(){
+                try {
+                    Thread.sleep(1000);
+                    notify();
+                    System.out.println(Thread.currentThread().getName() + " Over");
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        t2.start();
+
+        t1.join();
+        System.out.println("Main method terminate");
+
+    }
+
+    @Test
+    public void test13(){
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+                20,
+                100,
+                3L,
+                TimeUnit.SECONDS,
+                new LinkedBlockingQueue<>(3),
+                Executors.defaultThreadFactory()
+        );
+//        List<Integer> list = new ArrayList<>();
+        List<Integer> list = new LinkedList<>();
+        for(int i=0; i<100; i++){
+            int finalI = i;
+            threadPoolExecutor.execute(() -> {
+                list.add(new Integer(finalI));
+                System.out.println(list);
+            });
+        }
+    }
+
+    @Test
+    public void test14(){
+        Object a = new Object();
+        Object b = new Object();
+        new Thread(() -> {
+            synchronized (a){
+                System.out.println(Thread.currentThread().getName() + "获取到a");
+                System.out.println(Thread.currentThread().getName() + "正在获取b");
+                try {
+                    TimeUnit.SECONDS.sleep(3);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                synchronized (b){
+                    System.out.println(Thread.currentThread().getName() + "获取到b");
+                }
+            }
+        }, "A").start();
+
+        new Thread(() -> {
+            synchronized (b){
+                System.out.println(Thread.currentThread().getName() + "获取到a");
+                System.out.println(Thread.currentThread().getName() + "正在获取b");
+                try {
+                    TimeUnit.SECONDS.sleep(3);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                synchronized (a){
+                    System.out.println(Thread.currentThread().getName() + "获取到b");
+                }
+            }
+        }, "B").start();
+    }
+
+    public static void main(String[] args) {
+        Object a = new Object();
+        Object b = new Object();
+        new Thread(() -> {
+            synchronized (a){
+                System.out.println(Thread.currentThread().getName() + "获取到a");
+                System.out.println(Thread.currentThread().getName() + "正在获取b");
+                try {
+                    TimeUnit.SECONDS.sleep(3);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                synchronized (b){
+                    System.out.println(Thread.currentThread().getName() + "获取到b");
+                }
+            }
+        }, "A").start();
+
+        new Thread(() -> {
+            synchronized (b){
+                System.out.println(Thread.currentThread().getName() + "获取到a");
+                System.out.println(Thread.currentThread().getName() + "正在获取b");
+                try {
+                    TimeUnit.SECONDS.sleep(3);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                synchronized (a){
+                    System.out.println(Thread.currentThread().getName() + "获取到b");
+                }
+            }
+        }, "B").start();
+    }
+
+    @Test
+    public void test15(){
+            String s1 = "abc";
+            String s2 = new String("abc");
+            System.out.println(s1==s2);
+            s2.intern();
+            System.out.println(s1==s2);
+    }
+
 
 }
