@@ -12,6 +12,7 @@ package com.hhl.test.interfaceTest;
 /**
  * 接口的静态方法只能使用类名的方式调用。实现了接口的类无法调用接口的静态方法，
  * 但是可以创建对象，调用接口的默认方法。
+ * 接口中方法的访问权限默认是public，且必须是public
  */
 public class Demo1 implements InterfaceDemo1{
     public static void main(String[] args) {

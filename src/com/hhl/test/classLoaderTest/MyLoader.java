@@ -10,6 +10,10 @@ import java.io.*;
  @author boom
  @create 2023-08-28 10:22
  */
+
+/**
+ * 无论如何都不能实现加载自己实现的java.lang.String这种类，即使自定义类加载去加载自己实现的这种类，在调用defineClass的时候，还是会抛出异常。
+ */
 public class MyLoader extends ClassLoader{
     private String path;
 
@@ -22,12 +26,12 @@ public class MyLoader extends ClassLoader{
         // 为什么这里执行了三次
         System.out.println("自定类加载器...in");
         System.out.println(name);
-        Class<?> loaderClass = findLoadedClass(name);
-        if(loaderClass != null){
-            return loaderClass;
-        }
-        if(!name.startsWith("java.")){
-            if(name.endsWith("MyClass")){
+//        Class<?> loaderClass = findLoadedClass(name);
+//        if(loaderClass != null){
+//            return loaderClass;
+//        }
+        if(name.startsWith("java.")){
+//            if(name.endsWith("MyClass")){
                 System.out.println("自定类加载器...");
                 try {
                     byte[] classData = getClassData(name);
@@ -37,7 +41,7 @@ public class MyLoader extends ClassLoader{
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            }
+//            }
         }
         return super.loadClass(name, resolve);
     }
